@@ -20,6 +20,7 @@ public class UserEntity extends BaseEntity {
     private String username;
     @Column(name = "password")
     private String password;
+    private String field;
 //    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //    @JoinTable(name = "users_2_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false))
 //    private List<Role> roles = new ArrayList<>();
