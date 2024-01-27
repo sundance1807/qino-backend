@@ -1,8 +1,10 @@
 package com.qino.model.entity;
 
+import com.qino.model.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class UserEntity extends BaseEntity {
 
     @Id
@@ -20,8 +23,8 @@ public class UserEntity extends BaseEntity {
     private String username;
     @Column(name = "password")
     private String password;
-    private String field;
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "users_2_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false))
-//    private List<Role> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_2_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false))
+    private List<Role> roles = new ArrayList<>();
 }
