@@ -31,6 +31,5 @@ public class BaseEntity implements Serializable {
         if (this.createdBy == null) {
             this.createdBy = "SYSTEM";
         }
-        this.updatedAt = now;
     }
 }

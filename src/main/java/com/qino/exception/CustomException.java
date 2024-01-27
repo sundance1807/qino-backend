@@ -1,4 +1,4 @@
-package com.qino.config.exception;
+package com.qino.exception;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 @Data
 @Builder
 public class CustomException extends Exception {
-
     HttpStatus httpStatus;
     String message;
 }
