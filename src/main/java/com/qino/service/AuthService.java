@@ -5,10 +5,14 @@ import com.qino.model.dto.AuthDto;
 import com.qino.model.entity.UserEntity;
 import com.qino.repository.RoleRepository;
 import com.qino.repository.UserRepository;
+import com.qino.util.MessageSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +37,13 @@ public class AuthService {
         userEntity.setRoles(Collections.singletonList(roles));
         userRepository.save(userEntity);
 
-        return new ResponseEntity<>("User registered success.", HttpStatus.OK);
+        return new ResponseEntity<>(MessageSource.USER_REGISTERED_SUCCESS.getText(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> login(AuthDto authDto) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return new ResponseEntity<>(MessageSource.USER_SIGNED_SUCCESS.getText(), HttpStatus.OK);
     }
 }
