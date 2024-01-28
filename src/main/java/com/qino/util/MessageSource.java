@@ -8,7 +8,7 @@ public enum MessageSource {
     USER_SIGNED_SUCCESS("User signed success");
 
 
-    private String text;
+    private final String text;
 
     MessageSource(String text) {
         this.text = text;
