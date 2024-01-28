@@ -1,6 +1,7 @@
 package com.qino.controller;
 
 import com.qino.model.dto.AuthDto;
+import com.qino.model.dto.AuthResponseDto;
 import com.qino.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthDto authDto) {
+    public ResponseEntity<AuthResponseDto> login(@RequestBody AuthDto authDto) {
         log.info("Incoming request to login user: {}", authDto);
         return authService.login(authDto);
     }
