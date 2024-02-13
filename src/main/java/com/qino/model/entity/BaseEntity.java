@@ -1,8 +1,6 @@
 package com.qino.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +9,6 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 public class BaseEntity implements Serializable {
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "created_by")

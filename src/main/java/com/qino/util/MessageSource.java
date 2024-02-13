@@ -1,12 +1,17 @@
 package com.qino.util;
 
 public enum MessageSource {
-    USER_NOT_FOUND("User not found"),
-    USERNAME_NOT_FOUND("Username not found"),
-    USERNAME_IS_ALREADY_TAKEN("Username is already taken"),
-    USER_REGISTERED_SUCCESS("User registered success"),
-    USER_SIGNED_SUCCESS("User signed success");
 
+    //Users
+    USER_NOT_FOUND("User '%s' not found"),
+    USERNAME_IS_ALREADY_TAKEN("Username '%s' is already taken"),
+    //Genres
+    GENRE_IS_ALREADY_EXIST("A '%s' genre is already exist"),
+    GENRE_NOT_FOUND("Genre with id: '%s' is not found"),
+
+
+
+    ;
 
     private final String text;
 

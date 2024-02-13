@@ -1,21 +1,21 @@
 package com.qino.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
 @Data
+@Table(name = "genres")
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity extends BaseEntity {
+public class GenreEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username", unique = true, nullable = false)
-    private String username;
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "name", nullable = false)
+    private String name;
 }
