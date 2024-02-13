@@ -38,7 +38,7 @@ public class GenreService {
         }
         String[] words = genreDTO.getName().split(" ");
         StringBuilder capitalizedGenre = new StringBuilder();
-        
+
         for (String word : words) {
             word = word.toLowerCase();
             String cap = word.substring(0, 1).toUpperCase() + word.substring(1);
