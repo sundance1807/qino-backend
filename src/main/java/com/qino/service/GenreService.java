@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class GenreService {
-    GenreRepository genreRepository;
-    ModelMapper modelMapper;
+    private GenreRepository genreRepository;
+    private ModelMapper modelMapper;
 
     public Set<GenreDTO> saveAll(Set<GenreDTO> genreDTOSet) throws CustomException{
         Set<GenreDTO> savedGenres = new HashSet<>();
@@ -64,7 +64,7 @@ public class GenreService {
     public GenreDTO findOne(Long id) throws CustomException {
         GenreEntity genreEntity = genreRepository.findById(id)
             .orElseThrow(() -> CustomException.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
+                .httpStatus(HttpStatus.NOT_FOUND)
                 .message(MessageSource.GENRE_NOT_FOUND.getText(String.valueOf(id)))
                 .build());
 
@@ -74,7 +74,7 @@ public class GenreService {
     public GenreDTO updateOne(Long id, GenreDTO genreDTO) throws CustomException {
         GenreEntity genreEntity = genreRepository.findById(id)
             .orElseThrow(() -> CustomException.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
+                .httpStatus(HttpStatus.NOT_FOUND)
                 .message(MessageSource.GENRE_NOT_FOUND.getText(String.valueOf(genreDTO.getName().trim())))
                 .build());
         genreEntity.setName(genreDTO.getName().trim());
@@ -92,7 +92,7 @@ public class GenreService {
     public GenreDTO deleteOne(Long id) throws CustomException {
         GenreEntity genreEntity = genreRepository.findById(id)
             .orElseThrow(() -> CustomException.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
+                .httpStatus(HttpStatus.NOT_FOUND)
                 .message(MessageSource.GENRE_NOT_FOUND.getText(String.valueOf(id)))
                 .build());
         genreRepository.deleteById(id);

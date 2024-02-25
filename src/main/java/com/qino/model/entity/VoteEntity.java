@@ -12,10 +12,10 @@
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
-//    @Column(name = "title", length = 155, nullable = false)
+//    @Column(name = "title", nullable = false)
 //    private String title;
 //    @Column(name = "description", length = 1000, nullable = false)
 //    private String description;
-//    @Column(name = "vote", length = 2, nullable = false)
+//    @Column(name = "vote", length = 3, nullable = false)
 //    private byte vote;
 //}
