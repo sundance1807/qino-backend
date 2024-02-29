@@ -4,6 +4,7 @@ import com.qino.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @Entity

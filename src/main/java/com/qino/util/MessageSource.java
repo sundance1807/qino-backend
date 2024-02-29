@@ -1,9 +1,10 @@
 package com.qino.util;
 
 public enum MessageSource {
+    //System
 
     //Users
-    USER_NOT_FOUND("User '%s' not found."),
+    USER_NOT_FOUND("User with id: '%s' not found."),
     USERNAME_IS_ALREADY_TAKEN("Username '%s' is already taken."),
 
     //Genres
@@ -14,8 +15,11 @@ public enum MessageSource {
     DIRECTOR_NOT_FOUND("Director with id: '%s' not found."),
 
     //Writers
-    WRITER_NOT_FOUND("Writer with id: '%s' not found'.")
+    WRITER_NOT_FOUND("Writer with id: '%s' not found."),
 
+
+    //Composers
+    COMPOSER_NOT_FOUND("Composer with id: '%s' not found."),
 
 
     ;
