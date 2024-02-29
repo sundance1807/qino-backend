@@ -38,20 +38,6 @@ public class WriterController {
         return writerService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOne(@PathVariable("id") Long id) throws CustomException {
-        log.info("Incoming request to delete a writer with id: {}.", id);
-        writerService.deleteOne(id);
-    }
-
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteALl() {
-        log.info("Incoming request to delete all writers.");
-        writerService.deleteAll();
-    }
-
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public WriterDTO updateOne(@PathVariable("id") Long id, WriterDTO writerDTO) throws CustomException {
@@ -59,4 +45,10 @@ public class WriterController {
         return writerService.updateOne(id, writerDTO);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOne(@PathVariable("id") Long id) throws CustomException {
+        log.info("Incoming request to delete a writer with id: {}.", id);
+        writerService.deleteOne(id);
+    }
 }

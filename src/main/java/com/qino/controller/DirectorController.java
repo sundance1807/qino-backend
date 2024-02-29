@@ -38,24 +38,17 @@ public class DirectorController {
         return directorService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOne(@PathVariable ("id") Long id) throws CustomException {
-        log.info("Incoming request to delete a director with id: {}.", id);
-        directorService.deleteOne(id);
-    }
-
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteALl() {
-        log.info("Incoming request to delete all directors.");
-        directorService.deleteAll();
-    }
-
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public DirectorDTO updateOne(@PathVariable("id") Long id, DirectorDTO directorDTO) throws CustomException{
         log.info("Incoming request to update a director with id: {}.", id);
         return directorService.updateOne(id, directorDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOne(@PathVariable ("id") Long id) throws CustomException {
+        log.info("Incoming request to delete a director with id: {}.", id);
+        directorService.deleteOne(id);
     }
 }

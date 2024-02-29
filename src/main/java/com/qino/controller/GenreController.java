@@ -26,7 +26,7 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/{id}")
-    public GenreDTO findOne(@PathVariable ("id") Long id) throws CustomException {
+    public GenreDTO getOne(@PathVariable ("id") Long id) throws CustomException {
         log.info("Incoming request to get a genre with id: {}.", id);
         return genreService.findOne(id);
     }
@@ -53,7 +53,7 @@ public class GenreController {
     }
 
     @GetMapping("/showAll")
-    public Set<GenreDTO> findAll() {
+    public Set<GenreDTO> getAll() {
         log.info("Incoming request to get all genres.");
         return genreService.findAll();
     }
