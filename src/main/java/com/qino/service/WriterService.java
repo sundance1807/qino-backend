@@ -4,6 +4,7 @@ import com.qino.exception.CustomException;
 import com.qino.model.dto.WriterDTO;
 import com.qino.model.entity.cast.WriterEntity;
 import com.qino.repository.WriterRepository;
+import com.qino.util.Generator;
 import com.qino.util.MessageSource;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class WriterService {
     private WriterRepository writerRepository;
     private ModelMapper modelMapper;
+    private final Generator generator;
 
     public WriterDTO saveOne(WriterDTO writerDTO) {
         WriterEntity writerEntity = modelMapper.map(writerDTO, WriterEntity.class);
@@ -28,13 +30,7 @@ public class WriterService {
     }
 
     public WriterDTO findOne(Long id) throws CustomException {
-        WriterEntity writerEntity = writerRepository.findById(id)
-            .orElseThrow(() -> CustomException.builder()
-                .httpStatus(HttpStatus.NOT_FOUND)
-                .message(MessageSource.WRITER_NOT_FOUND.getText(String.valueOf(id)))
-                .build());
-
-        return modelMapper.map(writerEntity, WriterDTO.class);
+        return modelMapper.map(findById(id), WriterDTO.class);
     }
 
     public Set<WriterDTO> findAll() {
@@ -45,12 +41,7 @@ public class WriterService {
     }
 
     public void deleteOne(Long id) throws CustomException {
-        WriterEntity writerEntity = writerRepository.findById(id)
-            .orElseThrow(() -> CustomException.builder()
-                .httpStatus(HttpStatus.NOT_FOUND)
-                .message(MessageSource.WRITER_NOT_FOUND.getText(String.valueOf(id)))
-                .build());
-        writerRepository.deleteById(id);
+        writerRepository.delete(findById(id));
     }
 
     public void deleteAll() {
@@ -58,11 +49,7 @@ public class WriterService {
     }
 
     public WriterDTO updateOne(Long id, WriterDTO writer) throws CustomException {
-        WriterEntity writerEntity = writerRepository.findById(id)
-            .orElseThrow(() -> CustomException.builder()
-                .httpStatus(HttpStatus.NOT_FOUND)
-                .message(MessageSource.WRITER_NOT_FOUND.getText(String.valueOf(id)))
-                .build());
+        WriterEntity writerEntity = findById(id);
         writerEntity.setFirstName(writer.getFirstName());
         writerEntity.setSecondName(writer.getSecondName());
         writerEntity.setFullName(writer.getFirstName() + " " + writer.getSecondName());
@@ -70,5 +57,13 @@ public class WriterService {
         writerEntity = writerRepository.save(writerEntity);
 
         return modelMapper.map(writerEntity, WriterDTO.class);
+    }
+
+    public WriterEntity findById(Long id) throws CustomException{
+        return writerRepository.findById(id)
+            .orElseThrow(() -> CustomException.builder()
+                .httpStatus(HttpStatus.NOT_FOUND)
+                .message(MessageSource.WRITER_NOT_FOUND.getText(String.valueOf(id)))
+                .build());
     }
 }

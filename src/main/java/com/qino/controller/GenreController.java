@@ -24,23 +24,11 @@ public class GenreController {
         return genreService.saveOne(genreDTO);
     }
 
-    @PostMapping("/uploadAll")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Set<GenreDTO> saveAll(@RequestBody Set<GenreDTO> genreDTOSet) throws CustomException {
-        log.info("Incoming request to create a genres: {}.", genreDTOSet);
-        return genreService.saveAll(genreDTOSet);
-    }
-
+    @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/{id}")
-    public GenreDTO getOne(@PathVariable ("id") Long id) throws CustomException {
+    public GenreDTO findOne(@PathVariable ("id") Long id) throws CustomException {
         log.info("Incoming request to get a genre with id: {}.", id);
         return genreService.findOne(id);
-    }
-
-    @GetMapping
-    public Set<GenreDTO> getAll() {
-        log.info("Incoming request to get all genres.");
-        return genreService.findAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -52,15 +40,21 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public GenreDTO deleteOne(@PathVariable ("id") Long id) throws CustomException {
+    public void deleteOne(@PathVariable ("id") Long id) throws CustomException {
         log.info("Incoming request to delete a genre with id: {}.",id);
-        return genreService.deleteOne(id);
+        genreService.deleteOne(id);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping
-    public Set<GenreDTO> deleteAll() {
-        log.info("Incoming request to delete a genres.");
-        return genreService.deleteAll();
+    @PostMapping("/createAll")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Set<GenreDTO> saveAll(@RequestBody Set<GenreDTO> genreDTOSet) throws CustomException {
+        log.info("Incoming request to create a genres: {}.", genreDTOSet);
+        return genreService.saveAll(genreDTOSet);
+    }
+
+    @GetMapping("/showAll")
+    public Set<GenreDTO> findAll() {
+        log.info("Incoming request to get all genres.");
+        return genreService.findAll();
     }
 }

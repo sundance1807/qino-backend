@@ -112,14 +112,6 @@ public class GenreService {
     }
 
     /**
-     * Deletes all genres
-     */
-    @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
-    public void deleteAll() {
-        genreRepository.deleteAll();
-    }
-
-    /**
      *
      * @param id genre id
      * @return existing genre

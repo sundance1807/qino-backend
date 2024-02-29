@@ -6,6 +6,7 @@ public enum MessageSource {
     //Users
     USER_NOT_FOUND("User with id: '%s' not found."),
     USERNAME_IS_ALREADY_TAKEN("Username '%s' is already taken."),
+    INVALID_USERNAME_FORMAT("Invalid username format"),
 
     //Genres
     GENRE_IS_ALREADY_EXIST("A '%s' genre is already exist."),

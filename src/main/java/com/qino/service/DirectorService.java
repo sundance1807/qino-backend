@@ -77,11 +77,6 @@ public class DirectorService implements CrudInterface<DirectorDTO, DirectorEntit
     }
 
     @Override
-    public void deleteAll() {
-        directorRepository.deleteAll();
-    }
-
-    @Override
     public DirectorEntity findById(Long id) throws CustomException {
         return directorRepository.findById(id)
             .orElseThrow(() -> CustomException.builder()
