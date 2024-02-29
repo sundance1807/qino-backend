@@ -46,6 +46,22 @@ public class GenreService {
 
     /**
      *
+     * @param genreDTOSet set of genres to save
+     * @return set of saved genres
+     * @throws CustomException if any validation fails
+     */
+    @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
+    public Set<GenreDTO> saveAll(Set<GenreDTO> genreDTOSet) throws CustomException {
+        Set<GenreDTO> savedGenres = new HashSet<>();
+        for (GenreDTO genreDTO : genreDTOSet) {
+            GenreDTO savedGenre = saveOne(genreDTO);
+            savedGenres.add(savedGenre);
+        }
+        return savedGenres;
+    }
+
+    /**
+     *
      * @param id genre id
      * @return existing genre
      * @throws CustomException if any validation fails
@@ -85,21 +101,6 @@ public class GenreService {
         genreRepository.delete(genreEntity);
     }
 
-    /**
-     *
-     * @param genreDTOSet set of genres to save
-     * @return set of saved genres
-     * @throws CustomException if any validation fails
-     */
-    @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
-    public Set<GenreDTO> saveAll(Set<GenreDTO> genreDTOSet) throws CustomException {
-        Set<GenreDTO> savedGenres = new HashSet<>();
-        for (GenreDTO genreDTO : genreDTOSet) {
-            GenreDTO savedGenre = saveOne(genreDTO);
-            savedGenres.add(savedGenre);
-        }
-        return savedGenres;
-    }
 
     /**
      *

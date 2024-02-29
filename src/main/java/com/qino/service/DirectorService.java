@@ -1,9 +1,9 @@
 package com.qino.service;
 
 import com.qino.exception.CustomException;
+import com.qino.inteface.CastServiceInterface;
 import com.qino.model.dto.DirectorDTO;
 import com.qino.model.entity.cast.DirectorEntity;
-import com.qino.repository.CrudInterface;
 import com.qino.repository.DirectorRepository;
 import com.qino.util.Generator;
 import com.qino.util.MessageSource;
@@ -12,13 +12,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class DirectorService implements CrudInterface<DirectorDTO, DirectorEntity> {
+public class DirectorService implements CastServiceInterface<DirectorDTO, DirectorEntity> {
     private final DirectorRepository directorRepository;
     private final ModelMapper modelMapper;
     private final Generator generator;
@@ -39,11 +38,11 @@ public class DirectorService implements CrudInterface<DirectorDTO, DirectorEntit
         return modelMapper.map(directorEntity, DirectorDTO.class);
     }
 
-    @Override
-    public void deleteOne(Long id) throws CustomException {
-        DirectorEntity directorEntity = findById(id);
-
-        directorRepository.delete(directorEntity);
+    public Set<DirectorDTO> findAll() {
+        return directorRepository.findAll()
+            .stream()
+            .map(DirectorDTO::new)
+            .collect(Collectors.toSet());
     }
 
     @Override
@@ -58,22 +57,10 @@ public class DirectorService implements CrudInterface<DirectorDTO, DirectorEntit
     }
 
     @Override
-    public Set<DirectorDTO> saveAll(Set<DirectorDTO> directorDTOSet) {
-        Set<DirectorDTO> savedDirectors = new HashSet<>();
-        for (DirectorDTO director : directorDTOSet) {
-            DirectorDTO savedDirector = saveOne(director);
-            savedDirectors.add(savedDirector);
-        }
+    public void deleteOne(Long id) throws CustomException {
+        DirectorEntity directorEntity = findById(id);
 
-        return savedDirectors;
-    }
-
-
-    public Set<DirectorDTO> findAll() {
-        return directorRepository.findAll()
-            .stream()
-            .map(DirectorDTO::new)
-            .collect(Collectors.toSet());
+        directorRepository.delete(directorEntity);
     }
 
     @Override

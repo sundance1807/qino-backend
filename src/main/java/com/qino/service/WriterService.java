@@ -44,10 +44,6 @@ public class WriterService {
         writerRepository.delete(findById(id));
     }
 
-    public void deleteAll() {
-        writerRepository.deleteAll();
-    }
-
     public WriterDTO updateOne(Long id, WriterDTO writer) throws CustomException {
         WriterEntity writerEntity = findById(id);
         writerEntity.setFirstName(writer.getFirstName());
