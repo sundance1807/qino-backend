@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class GenreDTO extends BaseDTO{
+public class GenreDTO {
+    private Long id;
     private String name;
 
     public GenreDTO(GenreEntity genreEntity) {

@@ -24,25 +24,11 @@ public class GenreController {
         return genreService.saveOne(genreDTO);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Set<GenreDTO> saveAll(@RequestBody Set<GenreDTO> genreDTOSet) throws CustomException {
-        log.info("Incoming request to create a genres: {}.", genreDTOSet);
-        return genreService.saveAll(genreDTOSet);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public GenreDTO getOne(@PathVariable ("id") Long id) throws CustomException {
+    public GenreDTO findOne(@PathVariable ("id") Long id) throws CustomException {
         log.info("Incoming request to get a genre with id: {}.", id);
         return genreService.findOne(id);
-    }
-
-    @GetMapping("/showAll")
-    @ResponseStatus(HttpStatus.FOUND)
-    public Set<GenreDTO> getAll() {
-        log.info("Incoming request to get all genres.");
-        return genreService.findAll();
     }
 
     @PutMapping("/{id}")

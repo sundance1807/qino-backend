@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.print.attribute.standard.ColorSupported;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,43 +22,20 @@ public class GenreService {
     private GenreRepository genreRepository;
     private ModelMapper modelMapper;
 
-
     /**
      *
-     * @param genreDTO genre to create;
-     * @return  created genre
+     * @param genreDTO genre to save
+     * @return saved genre
      * @throws CustomException if any validation fails
      */
     @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
     public GenreDTO saveOne(GenreDTO genreDTO) throws CustomException {
-        if (genreRepository.existsByName(genreDTO.getName().trim())) {
-            throw CustomException.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
-                .message(MessageSource.GENRE_IS_ALREADY_EXIST.getText(String.valueOf(genreDTO.getName())))
-                .build();
-        }
-
-        genreDTO.setName(validateGenreName(genreDTO.getName()));
-        GenreEntity genreEntity = modelMapper.map(genreDTO, GenreEntity.class);
-        genreRepository.save(genreEntity);
+        String genreName = validateGenreName(genreDTO.getName().trim());
+        existByName(genreName);
+        genreDTO.setName(genreName);
+        GenreEntity genreEntity = genreRepository.save(modelMapper.map(genreDTO, GenreEntity.class));
 
         return modelMapper.map(genreEntity, GenreDTO.class);
-    }
-
-    /**
-     *
-     * @param genreDTOSet set of genres to save
-     * @return set of saved genres
-     * @throws CustomException if any validation fails
-     */
-    @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
-    public Set<GenreDTO> saveAll(Set<GenreDTO> genreDTOSet) throws CustomException {
-        Set<GenreDTO> savedGenres = new HashSet<>();
-        for (GenreDTO genreDTO : genreDTOSet) {
-            GenreDTO savedGenre = saveOne(genreDTO);
-            savedGenres.add(savedGenre);
-        }
-        return savedGenres;
     }
 
     /**
@@ -66,7 +44,6 @@ public class GenreService {
      * @return existing genre
      * @throws CustomException if any validation fails
      */
-
     public GenreDTO findOne(Long id) throws CustomException {
         GenreEntity genreEntity = findById(id);
 
@@ -76,17 +53,18 @@ public class GenreService {
     /**
      *
      * @param id genre id
-     * @param genreDTO genre dto
+     * @param genreDTO data to update
      * @return updated genre
      * @throws CustomException if any validation fails
      */
     @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
     public GenreDTO updateOne(Long id, GenreDTO genreDTO) throws CustomException {
+        String genreName = validateGenreName(genreDTO.getName().trim());
+        existByName(genreName);
         GenreEntity genreEntity = findById(id);
-        genreEntity.setName(genreDTO.getName().trim());
-        genreEntity = genreRepository.save(genreEntity);
+        genreEntity.setName(genreName);
 
-        return modelMapper.map(genreEntity, GenreDTO.class);
+        return modelMapper.map(genreRepository.save(genreEntity), GenreDTO.class);
     }
 
     /**
@@ -99,17 +77,6 @@ public class GenreService {
         GenreEntity genreEntity = findById(id);
 
         genreRepository.delete(genreEntity);
-    }
-
-
-    /**
-     *
-     * @return set of existing genres
-     */
-    public Set<GenreDTO> findAll() {
-        return genreRepository.findAll().stream()
-            .map(GenreDTO::new)
-            .collect(Collectors.toSet());
     }
 
     /**
@@ -128,11 +95,25 @@ public class GenreService {
 
     /**
      *
-     * @param genreName genre name to capitalize
-     * @return capitalized genre name
+     * @param name genre's name
+     * @throws CustomException if any validation fails
      */
-    private String validateGenreName(String genreName) {
-        String[] words = genreName.split(" ");
+    private void existByName(String name) throws CustomException {
+        if (genreRepository.existsByName(name)) {
+            throw CustomException.builder()
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .message(MessageSource.GENRE_IS_ALREADY_EXIST.getText(name))
+                .build();
+        }
+    }
+
+    /**
+     *
+     * @param name genre's name validate
+     * @return capitalized genre's name
+     */
+    private String validateGenreName(String name) {
+        String[] words = name.split(" ");
         StringBuilder capitalizedGenre = new StringBuilder();
 
         for (String word : words) {
@@ -140,6 +121,7 @@ public class GenreService {
             String cap = word.substring(0, 1).toUpperCase() + word.substring(1);
             capitalizedGenre.append(cap).append(" ");
         }
+
         return capitalizedGenre.toString().trim();
     }
 }
