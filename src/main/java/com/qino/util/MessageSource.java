@@ -31,14 +31,13 @@ public enum MessageSource {
 
 
     ;
-
     private final String text;
 
     MessageSource(String text) {
         this.text = text;
     }
 
-    public String getText(String... params) {
-        return String.format(this.text, params);
+    public String getText(String param) {
+        return String.format(this.text, param);
     }
 }

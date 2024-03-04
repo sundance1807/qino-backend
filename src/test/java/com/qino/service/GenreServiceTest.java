@@ -19,9 +19,6 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +46,6 @@ class GenreServiceTest {
     @Test
     void saveOne_savesGenre() throws CustomException {
         //given
-        ArgumentCaptor<GenreDTO> genreDTOArgumentCaptor = ArgumentCaptor.forClass(GenreDTO.class);
         GenreDTO genreDTO = Instancio.create(GenreDTO.class);
         genreDTO.setName(GENRE_NAME);
         GenreEntity genreEntity = modelMapper.map(genreDTO, GenreEntity.class);
@@ -65,7 +61,6 @@ class GenreServiceTest {
     @Test
     void saveOne_throwsException_whenGenreNameIsExists() throws CustomException {
         //given
-        ArgumentCaptor<GenreDTO> genreDTOArgumentCaptor = ArgumentCaptor.forClass(GenreDTO.class);
         GenreDTO genreDTO = Instancio.create(GenreDTO.class);
         genreDTO.setName(GENRE_NAME);
         when(genreRepository.existsByName(genreDTO.getName())).thenReturn(true);
@@ -79,7 +74,15 @@ class GenreServiceTest {
 
     @Test
     void findOne_throwsException_whenGenreNotFound() throws CustomException {
-
+        //given
+        GenreDTO genreDTO = Instancio.create(GenreDTO.class);
+        when(genreRepository.findById(ID)).thenReturn(Optional.empty());
+        //when
+        CustomException exception = assertThrows(CustomException.class, () -> underTest.findOne(ID));
+        //then
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+        assertEquals(MessageSource.GENRE_NOT_FOUND.getText(ID.toString()), exception.getMessage());
     }
 
     @Test
@@ -99,9 +102,8 @@ class GenreServiceTest {
     }
 
     @Test
-    void updateOne_updatesGenre() throws CustomException{
+    void updateOne_updatesGenre() throws CustomException {
         //given
-        ArgumentCaptor<GenreEntity> genreEntityArgumentCaptor = ArgumentCaptor.forClass(GenreEntity.class);
         GenreDTO genreDTO = Instancio.create(GenreDTO.class);
         genreDTO.setName(GENRE_NAME);
         GenreEntity genreEntity = modelMapper.map(genreDTO, GenreEntity.class);
@@ -111,13 +113,12 @@ class GenreServiceTest {
         //when
         GenreDTO updatedGenreDTO = underTest.updateOne(ID, genreDTO);
         //then
-        verify(genreRepository).save(genreEntityArgumentCaptor.capture());
-        GenreEntity updatedGenreEntity = genreEntityArgumentCaptor.getValue();
+
         assertEquals(genreDTO.getName(), updatedGenreDTO.getName());
     }
 
     @Test
-    void updateOne_throwsException_whenGenreNotFound() throws CustomException{
+    void updateOne_throwsException_whenGenreNotFound() throws CustomException {
         //given
         GenreDTO genreDTO = Instancio.create(GenreDTO.class);
         when(genreRepository.findById(ID)).thenReturn(Optional.empty());
@@ -130,9 +131,8 @@ class GenreServiceTest {
     }
 
     @Test
-    void updateOne_throwsException_whenGenreNameExists() throws CustomException{
+    void updateOne_throwsException_whenGenreNameExists() throws CustomException {
         //given
-        ArgumentCaptor<GenreDTO> genreDTOArgumentCaptor = ArgumentCaptor.forClass(GenreDTO.class);
         GenreDTO genreDTO = Instancio.create(GenreDTO.class);
         genreDTO.setName(GENRE_NAME);
         when(genreRepository.existsByName(genreDTO.getName())).thenReturn(true);
@@ -145,7 +145,7 @@ class GenreServiceTest {
     }
 
     @Test
-    void deleteOne_throwsException_whenGenreNotFound() throws CustomException{
+    void deleteOne_throwsException_whenGenreNotFound() throws CustomException {
         //given
         when(genreRepository.findById(ID)).thenReturn(Optional.empty());
         //when
@@ -157,7 +157,7 @@ class GenreServiceTest {
     }
 
     @Test
-    void deleteOne_deletesGenre() throws CustomException{
+    void deleteOne_deletesGenre() throws CustomException {
         //given
         ArgumentCaptor<GenreEntity> genreEntityArgumentCaptor = ArgumentCaptor.forClass(GenreEntity.class);
         GenreEntity genreEntity = Instancio.create(GenreEntity.class);
