@@ -75,7 +75,6 @@ class GenreServiceTest {
     @Test
     void findOne_throwsException_whenGenreNotFound() throws CustomException {
         //given
-        GenreDTO genreDTO = Instancio.create(GenreDTO.class);
         when(genreRepository.findById(ID)).thenReturn(Optional.empty());
         //when
         CustomException exception = assertThrows(CustomException.class, () -> underTest.findOne(ID));

@@ -10,7 +10,7 @@ public enum MessageSource {
     USER_ID_CANNOT_BE_CHANGED("User id cannot be changed."),
 
     //Genres
-    GENRE_IS_ALREADY_EXIST("A '%s' genre is already exist."),
+    GENRE_IS_ALREADY_EXIST("Genre '%s' is already exist."),
     GENRE_NOT_FOUND("Genre with id: '%s' is not found."),
 
     //Directors
@@ -28,6 +28,10 @@ public enum MessageSource {
 
     //Reviews
     REVIEW_NOT_FOUND("Review with id: '%s' not found."),
+
+    //Careers
+    CAREER_NOT_FOUND("Career '%s' is not found."),
+    CAREER_ALREADY_EXIST("Career '%s' is already exists.")
 
 
     ;
