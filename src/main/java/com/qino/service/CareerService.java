@@ -68,6 +68,12 @@ public class CareerService {
                 .build());
     }
 
+
+    /**
+     *
+     * @param name career name
+     * @throws CustomException if career already exists
+     */
     private void validateCareerName(String name) throws CustomException {
         Optional<CareerEntity> careerEntity = careerRepository.findByName(name);
 
