@@ -11,11 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.print.attribute.standard.ColorSupported;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Service
 @AllArgsConstructor
 public class GenreService {
@@ -30,7 +25,7 @@ public class GenreService {
      */
     @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
     public GenreDTO saveOne(GenreDTO genreDTO) throws CustomException {
-        String genreName = validateGenreName(genreDTO.getName().trim());
+        String genreName = capitalize(genreDTO.getName().trim());
         existByName(genreName);
         genreDTO.setName(genreName);
         GenreEntity genreEntity = genreRepository.save(modelMapper.map(genreDTO, GenreEntity.class));
@@ -59,7 +54,7 @@ public class GenreService {
      */
     @Transactional(rollbackFor = {RuntimeException.class, Error.class, CustomException.class})
     public GenreDTO updateOne(Long id, GenreDTO genreDTO) throws CustomException {
-        String genreName = validateGenreName(genreDTO.getName().trim());
+        String genreName = capitalize(genreDTO.getName().trim());
         existByName(genreName);
         GenreEntity genreEntity = findById(id);
         genreEntity.setName(genreName);
@@ -112,7 +107,7 @@ public class GenreService {
      * @param name genre's name validate
      * @return capitalized genre's name
      */
-    private String validateGenreName(String name) {
+    private String capitalize(String name) {
         String[] words = name.split(" ");
         StringBuilder capitalizedGenre = new StringBuilder();
 
