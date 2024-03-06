@@ -1,11 +1,9 @@
 package com.qino.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qino.model.entity.CareerEntity;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +18,4 @@ public class PersonDTO extends BaseDTO {
     private LocalDate dateOfBirth;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int age;
-    private Set<CareerEntity> careers;
 }

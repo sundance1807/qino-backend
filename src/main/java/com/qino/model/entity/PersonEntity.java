@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @Entity
@@ -23,9 +22,4 @@ public class PersonEntity extends BaseEntity {
     private LocalDate dateOfBirth;
     @Column(name = "age", nullable = false)
     private int age;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "persons_2_careers",
-        joinColumns = @JoinColumn(name = "person_id", nullable = false),
-        inverseJoinColumns = @JoinColumn(name = "career_id", nullable = false))
-    private Set<CareerEntity> careers;
 }

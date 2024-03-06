@@ -21,10 +21,6 @@ public enum MessageSource {
     REVIEW_NOT_FOUND("Review with id: '%s' not found."),
     UNABLE_TO_UPDATE_BY_ANOTHER_USER("Unable to edit review by another user."),
 
-    //Careers
-    CAREER_NOT_FOUND("Career '%s' is not found."),
-    CAREER_ALREADY_EXIST("Career '%s' is already exists."),
-
     //Persons
     PERSON_NOT_FOUND("Person with id: '%s' not found."),
 
