@@ -54,7 +54,6 @@ public class PersonService {
         personEntity.setSecondName(personDTO.getSecondName());
         personEntity.setDateOfBirth(personDTO.getDateOfBirth());
         personEntity.setAge(calculateAge(personDTO.getDateOfBirth()));
-        personEntity.setCareers(personDTO.getCareers());
         personEntity = personRepository.save(personEntity);
 
         return modelMapper.map(personEntity, PersonDTO.class);
