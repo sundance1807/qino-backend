@@ -35,6 +35,7 @@ public class FilmService {
 
     public FilmDTO findOne(Long id) throws CustomException {
         FilmEntity filmEntity = findById(id);
+        filmEntity.setRating(filmRepository.getRating(id));
 
         return modelMapper.map(filmEntity, FilmDTO.class);
     }

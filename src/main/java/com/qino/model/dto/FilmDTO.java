@@ -17,4 +17,5 @@ public class FilmDTO extends BaseDTO {
     private String title;
     @NonNull
     private Set<GenreDTO> genres;
+    private Float rating;
 }
