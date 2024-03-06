@@ -29,5 +29,6 @@ public class FilmEntity extends BaseEntity {
     joinColumns = @JoinColumn(name = "film_id", nullable = false),
     inverseJoinColumns = @JoinColumn(name = "person_id", nullable = false))
     private Set<PersonEntity> directors;
+    private Long votes;
     private Float rating;
 }
