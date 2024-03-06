@@ -55,7 +55,6 @@ public class CareerService {
     }
 
     /**
-     *
      * @param id career id
      * @return existing career
      * @throws CustomException if career not found
@@ -70,7 +69,6 @@ public class CareerService {
 
 
     /**
-     *
      * @param name career name
      * @throws CustomException if career already exists
      */

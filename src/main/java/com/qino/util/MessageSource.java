@@ -10,10 +10,11 @@ public enum MessageSource {
 
     //Genres
     GENRE_IS_ALREADY_EXIST("Genre '%s' is already exist."),
-    GENRE_NOT_FOUND("Genre with id: '%s' is not found."),
+    GENRE_NOT_FOUND("Genrenot found."),
 
     //Films
     FILM_NOT_FOUND("Film with id: '%s' not found."),
+    RELEASE_YEAR_OUT_OF_BOUND("Release date out of bound."),
 
     //Reviews
     REVIEW_NOT_FOUND("Review with id: '%s' not found."),
@@ -32,7 +33,7 @@ public enum MessageSource {
         this.text = text;
     }
 
-    public String getText(String param) {
-        return String.format(this.text, param);
+    public String getText(String ...params) {
+        return String.format(this.text, params);
     }
 }

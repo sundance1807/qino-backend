@@ -11,6 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+
 @Service
 @AllArgsConstructor
 public class GenreService {
@@ -18,7 +22,6 @@ public class GenreService {
     private ModelMapper modelMapper;
 
     /**
-     *
      * @param genreDTO genre to save
      * @return saved genre
      * @throws CustomException if any validation fails
@@ -34,7 +37,6 @@ public class GenreService {
     }
 
     /**
-     *
      * @param id genre id
      * @return existing genre
      * @throws CustomException if any validation fails
@@ -46,8 +48,7 @@ public class GenreService {
     }
 
     /**
-     *
-     * @param id genre id
+     * @param id       genre id
      * @param genreDTO data to update
      * @return updated genre
      * @throws CustomException if any validation fails
@@ -63,7 +64,6 @@ public class GenreService {
     }
 
     /**
-     *
      * @param id genre id
      * @throws CustomException if any validation fails
      */
@@ -74,8 +74,25 @@ public class GenreService {
         genreRepository.delete(genreEntity);
     }
 
+    @Transactional
+    public Set<GenreEntity> getAllEntitiesByIds(Set<Long> ids) throws CustomException {
+        if (ids == null) {
+            return Collections.emptySet();
+        }
+
+        Set<GenreEntity> genreEntitySet = genreRepository.findAllByIdIn(ids);
+
+        if (genreEntitySet.size() < ids.size()) {
+            throw CustomException.builder()
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .message(MessageSource.GENRE_NOT_FOUND.getText(Arrays.toString(ids.toArray())))
+                .build();
+        }
+
+        return genreEntitySet;
+    }
+
     /**
-     *
      * @param id genre id
      * @return existing genre
      * @throws CustomException if any validation fails
@@ -88,8 +105,8 @@ public class GenreService {
                 .build());
     }
 
+
     /**
-     *
      * @param name genre's name
      * @throws CustomException if any validation fails
      */
@@ -103,7 +120,6 @@ public class GenreService {
     }
 
     /**
-     *
      * @param name genre's name validate
      * @return capitalized genre's name
      */
