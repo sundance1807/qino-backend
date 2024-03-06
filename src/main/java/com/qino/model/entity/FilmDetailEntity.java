@@ -14,6 +14,8 @@ import java.util.Set;
 public class FilmDetailEntity extends BaseEntity {
     @Id
     private Long id;
+    @Column(name = "description", nullable = false, length = 1000)
+    private String description;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "films_2_directors",
         joinColumns = @JoinColumn(name = "film_id", nullable = false),

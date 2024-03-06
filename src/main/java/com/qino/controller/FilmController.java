@@ -2,9 +2,7 @@ package com.qino.controller;
 
 import com.qino.exception.CustomException;
 import com.qino.model.dto.FilmDTO;
-import com.qino.model.dto.FilmDescriptionDTO;
 import com.qino.model.dto.FilmDetailDTO;
-import com.qino.service.FilmDescriptionService;
 import com.qino.service.FilmDetailService;
 import com.qino.service.FilmService;
 import lombok.AllArgsConstructor;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class FilmController {
     private FilmService filmService;
-    private FilmDescriptionService filmDescriptionService;
     private FilmDetailService filmDetailService;
 
     @PostMapping
@@ -47,21 +44,6 @@ public class FilmController {
     public void deleteOne(@PathVariable("id") Long id) throws CustomException {
         log.info("Incoming request to delete film with id: {}.", id);
         filmService.deleteOne(id);
-    }
-
-    @PostMapping("/{id}/description")
-    @ResponseStatus(HttpStatus.CREATED)
-    public FilmDescriptionDTO setDescription(@PathVariable("id") Long id,
-                                             @RequestBody FilmDescriptionDTO filmDescriptionDTO) {
-        log.info("Incoming request to save description for film with id: {}", id);
-        return filmDescriptionService.setDescription(id, filmDescriptionDTO);
-    }
-
-    @GetMapping("/{id}/description")
-    @ResponseStatus(HttpStatus.CREATED)
-    public FilmDescriptionDTO setDescription(@PathVariable("id") Long id) throws CustomException {
-        log.info("Incoming request to get description for film with id: {}", id);
-        return filmDescriptionService.getDescription(id);
     }
 
     @PostMapping("/{id}/details")
