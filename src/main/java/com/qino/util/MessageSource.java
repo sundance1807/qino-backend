@@ -10,7 +10,7 @@ public enum MessageSource {
 
     //Genres
     GENRE_IS_ALREADY_EXIST("Genre '%s' is already exist."),
-    GENRE_NOT_FOUND("Genrenot found."),
+    GENRE_NOT_FOUND("Genre not found."),
 
     //Films
     FILM_NOT_FOUND("Film with id: '%s' not found."),
@@ -19,6 +19,7 @@ public enum MessageSource {
 
     //Reviews
     REVIEW_NOT_FOUND("Review with id: '%s' not found."),
+    UNABLE_TO_UPDATE_BY_ANOTHER_USER("Unable to edit review by another user."),
 
     //Careers
     CAREER_NOT_FOUND("Career '%s' is not found."),

@@ -3,8 +3,10 @@ package com.qino.controller;
 import com.qino.exception.CustomException;
 import com.qino.model.dto.FilmDTO;
 import com.qino.model.dto.FilmDetailDTO;
+import com.qino.model.dto.ReviewDTO;
 import com.qino.service.FilmDetailService;
 import com.qino.service.FilmService;
+import com.qino.service.ReviewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class FilmController {
     private FilmService filmService;
     private FilmDetailService filmDetailService;
+    private ReviewService reviewService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,4 +63,42 @@ public class FilmController {
         log.info("Incoming request to get details for film with id: {}", id);
         return filmDetailService.getFilmDetails(id);
     }
+
+    @PostMapping("/{filmId}/reviews")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ReviewDTO saveReview(@PathVariable("filmId") Long filmId,
+                                @RequestBody ReviewDTO reviewDTO) throws CustomException {
+        log.info("Incoming request to save review for film with id: {}", filmId);
+
+        return reviewService.saveOne(filmId, reviewDTO);
+    }
+
+    @GetMapping("/{filmId}/reviews/{reviewId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ReviewDTO getReview(@PathVariable("filmId") Long filmId,
+                               @PathVariable("reviewId") Long reviewId) throws CustomException {
+        log.info("Incoming request to get review with id: {}", filmId);
+
+        return reviewService.getOne(filmId, reviewId);
+    }
+
+    @PutMapping("/{filmId}/reviews/{reviewId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ReviewDTO updateReview(@PathVariable("filmId") Long filmId,
+                                  @PathVariable("reviewId") Long reviewId,
+                                  @RequestBody ReviewDTO reviewDTO) throws CustomException {
+        log.info("Incoming request to update review with id: {}", reviewId);
+
+        return reviewService.updateOne(filmId, reviewId, reviewDTO);
+    }
+
+    @DeleteMapping("/{filmId}/reviews/{reviewId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteReview(@PathVariable("filmId") Long filmId,
+                             @PathVariable("reviewId") Long reviewId) throws CustomException {
+        log.info("Incoming request to update review with id: {}", reviewId);
+        reviewService.deleteOne(filmId, reviewId);
+    }
+
+
 }
