@@ -4,19 +4,15 @@ import com.qino.exception.CustomException;
 import com.qino.model.dto.FilmDescriptionDTO;
 import com.qino.model.entity.FilmDescriptionEntity;
 import com.qino.repository.FilmDescriptionRepository;
-import com.qino.repository.FilmRepository;
 import com.qino.util.MessageSource;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-@Data
 @Service
 @AllArgsConstructor
 public class FilmDescriptionService {
-    private final FilmRepository filmRepository;
     private final FilmDescriptionRepository filmDescriptionRepository;
     private final ModelMapper modelMapper;
 

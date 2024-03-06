@@ -20,6 +20,5 @@ public class PersonDTO extends BaseDTO {
     private LocalDate dateOfBirth;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int age;
-    @NonNull
     private Set<CareerEntity> careers;
 }
