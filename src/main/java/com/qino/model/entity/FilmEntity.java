@@ -24,4 +24,9 @@ public class FilmEntity extends BaseEntity {
     private Set<GenreEntity> genres;
     @Column(name = "release_year", nullable = false)
     private Year releaseYear;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "films_2_persons",
+    joinColumns = @JoinColumn(name = "film_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "person_id", nullable = false))
+    private Set<PersonEntity> directors;
 }
