@@ -15,7 +15,6 @@ public enum MessageSource {
     //Films
     FILM_NOT_FOUND("Film with id: '%s' not found."),
     RELEASE_YEAR_OUT_OF_BOUND("Release date out of bound."),
-    FILM_DESCRIPTION_NOT_FOUND("Film description not found."),
     FILM_DETAILS_NOT_FOUND("Film details not found."),
 
     //Reviews

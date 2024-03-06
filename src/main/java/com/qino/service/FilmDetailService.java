@@ -27,6 +27,9 @@ public class FilmDetailService {
         FilmDetailEntity filmDetailEntity =
             filmDetailRepository.findById(id).orElseGet(FilmDetailEntity::new);
         filmDetailEntity.setId(id);
+        filmDetailEntity.setDescription(filmDetailDTO.getDescription() == null ?
+            filmDetailEntity.getDescription() :
+            filmDetailDTO.getDescription());
         filmDetailEntity.setDirectors(filmDetailDTO.getDirectors().isEmpty() ?
             filmDetailEntity.getDirectors() :
             filmDetailDTO.getDirectors());

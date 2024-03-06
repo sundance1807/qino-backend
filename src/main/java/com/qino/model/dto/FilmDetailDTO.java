@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class FilmDetailDTO extends BaseDTO{
+    private String description;
     @NonNull
     private Set<PersonEntity> directors;
     @NonNull
