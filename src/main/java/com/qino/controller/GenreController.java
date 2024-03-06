@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @RestController
 @RequestMapping("/api/genres")
 @AllArgsConstructor
@@ -17,7 +15,7 @@ import java.util.Set;
 public class GenreController {
     private GenreService genreService;
 
-    @PostMapping("/genre")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public GenreDTO saveOne(@RequestBody GenreDTO genreDTO) throws CustomException {
         log.info("Incoming request to create a genre: {}.", genreDTO.getName());
@@ -26,22 +24,22 @@ public class GenreController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public GenreDTO findOne(@PathVariable ("id") Long id) throws CustomException {
+    public GenreDTO findOne(@PathVariable("id") Long id) throws CustomException {
         log.info("Incoming request to get a genre with id: {}.", id);
         return genreService.findOne(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GenreDTO updateOne(@PathVariable ("id") Long id, @RequestBody GenreDTO genreDTO) throws CustomException {
-        log.info("Incoming request to update '{}' genre.", genreDTO.getName());
+    public GenreDTO updateOne(@PathVariable("id") Long id, @RequestBody GenreDTO genreDTO) throws CustomException {
+        log.info("Incoming request to update genre with id: {}.", id);
         return genreService.updateOne(id, genreDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOne(@PathVariable ("id") Long id) throws CustomException {
-        log.info("Incoming request to delete a genre with id: {}.",id);
+    public void deleteOne(@PathVariable("id") Long id) throws CustomException {
+        log.info("Incoming request to delete a genre with id: {}.", id);
         genreService.deleteOne(id);
     }
 }

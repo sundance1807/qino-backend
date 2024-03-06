@@ -6,6 +6,7 @@ import com.qino.model.entity.PersonEntity;
 import com.qino.repository.PersonRepository;
 import com.qino.util.MessageSource;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.time.Period;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class PersonService {
     private PersonRepository personRepository;
     private ModelMapper modelMapper;
@@ -58,7 +60,6 @@ public class PersonService {
         personEntity = personRepository.save(personEntity);
 
         return modelMapper.map(personEntity, PersonDTO.class);
-
     }
 
     /**
