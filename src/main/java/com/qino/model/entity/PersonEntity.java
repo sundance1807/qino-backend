@@ -1,14 +1,19 @@
 package com.qino.model.entity;
 
+import com.qino.model.dto.PersonDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name = "persons")
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PersonEntity extends BaseEntity {
     @Id
@@ -20,6 +25,12 @@ public class PersonEntity extends BaseEntity {
     private String secondName;
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
-    @Column(name = "age", nullable = false)
+    @Column(name = "age")
     private int age;
+
+    public PersonEntity(PersonDTO personDTO) {
+        this.firstName = personDTO.getFirstName();
+        this.secondName = personDTO.getSecondName();
+        this.dateOfBirth = personDTO.getDateOfBirth();
+    }
 }

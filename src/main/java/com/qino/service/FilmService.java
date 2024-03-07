@@ -3,6 +3,8 @@ package com.qino.service;
 import com.qino.exception.CustomException;
 import com.qino.model.dto.FilmDTO;
 import com.qino.model.entity.FilmEntity;
+import com.qino.model.entity.GenreEntity;
+import com.qino.model.entity.PersonEntity;
 import com.qino.repository.FilmRepository;
 import com.qino.util.MessageSource;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +22,6 @@ public class FilmService {
     private ModelMapper modelMapper;
 
     /**
-     *
      * @param filmDTO film to save
      * @return saved film
      * @throws CustomException if releaseYear out of bound
@@ -33,7 +35,7 @@ public class FilmService {
         return modelMapper.map(filmEntity, FilmDTO.class);
     }
 
-    public FilmDTO findOne(Long id) throws CustomException {
+    public FilmDTO getOne(Long id) throws CustomException {
         FilmEntity filmEntity = findById(id);
         filmEntity.setRating(filmRepository.getRating(id));
         filmEntity.setVotes(filmRepository.getVotes(id));
@@ -42,25 +44,20 @@ public class FilmService {
     }
 
     /**
-     *
-     * @param id film id
+     * @param id      film id
      * @param filmDTO film data to update
      * @return updated film
      * @throws CustomException if film not found
      */
     public FilmDTO updateOne(Long id, FilmDTO filmDTO) throws CustomException {
-        FilmEntity filmEntity = findById(id);
-        filmEntity.setTitle(filmDTO.getTitle() == null
-            ? filmEntity.getTitle() : filmDTO.getTitle());
-        filmEntity.setReleaseYear(filmDTO.getReleaseYear() == null ?
-            filmEntity.getReleaseYear() : filmDTO.getReleaseYear());
-        filmRepository.save(filmEntity);
+        FilmEntity updatedFilmEntity = modelMapper.map(filmDTO, FilmEntity.class);
+        updatedFilmEntity.setId(id);
+        updatedFilmEntity = filmRepository.save(updatedFilmEntity);
 
-        return modelMapper.map(filmEntity, FilmDTO.class);
+        return modelMapper.map(updatedFilmEntity, FilmDTO.class);
     }
 
     /**
-     *
      * @param id film id
      * @throws CustomException if film not found
      */
@@ -84,4 +81,6 @@ public class FilmService {
                 .build();
         }
     }
+
+
 }

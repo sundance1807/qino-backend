@@ -13,10 +13,29 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class FilmDTO extends BaseDTO {
     private Long id;
-    private Year releaseYear;
-    private String title;
     @NonNull
-    private Set<GenreDTO> genres;
+    private String title;
+    private Year releaseYear;
+    @NonNull
+    private String description;
+    private Integer budget;
+    private Integer grosses;
+    @NonNull
+    private Integer duration;
     private Long votes;
     private Float rating;
+    @NonNull
+    private Set<GenreDTO> genres;
+    @NonNull
+    private Set<PersonDTO> directors;
+    @NonNull
+    private Set<PersonDTO> producers;
+    @NonNull
+    private Set<PersonDTO> writers;
+    @NonNull
+    private Set<PersonDTO> composers;
+    @NonNull
+    private Set<PersonDTO> actors;
+
+
 }

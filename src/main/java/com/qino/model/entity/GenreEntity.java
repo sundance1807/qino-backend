@@ -1,5 +1,6 @@
 package com.qino.model.entity;
 
+import com.qino.model.dto.GenreDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,8 @@ public class GenreEntity extends BaseEntity {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
+
+    public GenreEntity(GenreDTO genreDTO) {
+        this.name = genreDTO.getName();
+    }
 }

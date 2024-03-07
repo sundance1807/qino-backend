@@ -2,9 +2,7 @@ package com.qino.controller;
 
 import com.qino.exception.CustomException;
 import com.qino.model.dto.FilmDTO;
-import com.qino.model.dto.FilmDetailDTO;
 import com.qino.model.dto.ReviewDTO;
-import com.qino.service.FilmDetailService;
 import com.qino.service.FilmService;
 import com.qino.service.ReviewService;
 import lombok.AllArgsConstructor;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class FilmController {
     private FilmService filmService;
-    private FilmDetailService filmDetailService;
     private ReviewService reviewService;
 
     @PostMapping
@@ -30,9 +27,9 @@ public class FilmController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public FilmDTO findOne(@PathVariable("id") Long id) throws CustomException {
+    public FilmDTO getOne(@PathVariable("id") Long id) throws CustomException {
         log.info("Incoming request to get film with id: {}.", id);
-        return filmService.findOne(id);
+        return filmService.getOne(id);
     }
 
     @PutMapping("/{id}")
@@ -47,21 +44,6 @@ public class FilmController {
     public void deleteOne(@PathVariable("id") Long id) throws CustomException {
         log.info("Incoming request to delete film with id: {}.", id);
         filmService.deleteOne(id);
-    }
-
-    @PostMapping("/{id}/details")
-    @ResponseStatus(HttpStatus.CREATED)
-    public FilmDetailDTO setFilmDetails(@PathVariable("id") Long id,
-                                        @RequestBody FilmDetailDTO filmDetailDTO) throws CustomException {
-        log.info("Incoming request to save details for film with id: {}", id);
-        return filmDetailService.setFilmDetails(id, filmDetailDTO);
-    }
-
-    @GetMapping("/{id}/details")
-    @ResponseStatus(HttpStatus.CREATED)
-    public FilmDetailDTO setFilmDetails(@PathVariable("id") Long id) throws CustomException {
-        log.info("Incoming request to get details for film with id: {}", id);
-        return filmDetailService.getFilmDetails(id);
     }
 
     @PostMapping("/{filmId}/reviews")
