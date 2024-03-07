@@ -20,8 +20,8 @@ public class FilmEntity extends BaseEntity {
     private Year releaseYear;
     @Column(name = "description", nullable = false, length = 1000)
     private String description;
-    private Integer budget;
-    private Integer grosses;
+    private Integer budget = 0;
+    private Integer grosses = 0;
     @Column(name = "duration", nullable = false)
     private Integer duration;
     @Column(name = "votes")

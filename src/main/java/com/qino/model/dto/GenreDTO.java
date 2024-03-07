@@ -13,6 +13,7 @@ public class GenreDTO {
     private String name;
 
     public GenreDTO(GenreEntity genreEntity) {
+        this.id = genreEntity.getId();
         this.name = genreEntity.getName();
     }
 }

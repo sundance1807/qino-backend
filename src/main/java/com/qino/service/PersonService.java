@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -40,6 +42,13 @@ public class PersonService {
         personEntity.setAge(calculateAge(personEntity.getDateOfBirth()));
 
         return modelMapper.map(personEntity, PersonDTO.class);
+    }
+
+    public Set<PersonDTO> getAllPersons() {
+        return personRepository.findAll()
+            .stream()
+            .map(PersonDTO::new)
+            .collect(Collectors.toSet());
     }
 
     /**

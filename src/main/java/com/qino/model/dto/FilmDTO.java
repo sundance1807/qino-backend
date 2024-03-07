@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.Year;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -25,17 +26,17 @@ public class FilmDTO extends BaseDTO {
     private Long votes;
     private Float rating;
     @NonNull
-    private Set<GenreDTO> genres;
+    private Set<GenreDTO> genres = new HashSet<>();
     @NonNull
-    private Set<PersonDTO> directors;
+    private Set<PersonDTO> directors = new HashSet<>();
     @NonNull
-    private Set<PersonDTO> producers;
+    private Set<PersonDTO> producers = new HashSet<>();
     @NonNull
-    private Set<PersonDTO> writers;
+    private Set<PersonDTO> writers = new HashSet<>();
     @NonNull
-    private Set<PersonDTO> composers;
+    private Set<PersonDTO> composers = new HashSet<>();
     @NonNull
-    private Set<PersonDTO> actors;
+    private Set<PersonDTO> actors = new HashSet<>();
 
 
 }
