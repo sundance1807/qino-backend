@@ -2,9 +2,8 @@ package com.qino.service;
 
 import com.qino.exception.CustomException;
 import com.qino.model.dto.FilmDTO;
+import com.qino.model.dto.FilmPreviewDTO;
 import com.qino.model.entity.FilmEntity;
-import com.qino.model.entity.GenreEntity;
-import com.qino.model.entity.PersonEntity;
 import com.qino.repository.FilmRepository;
 import com.qino.util.MessageSource;
 import lombok.AllArgsConstructor;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +41,13 @@ public class FilmService {
         filmEntity.setVotes(filmRepository.getVotes(id));
 
         return modelMapper.map(filmEntity, FilmDTO.class);
+    }
+
+    public Set<FilmPreviewDTO> getAllFilmPreviews() {
+        return filmRepository.findAll()
+            .stream()
+            .map(FilmPreviewDTO::new)
+            .collect(Collectors.toSet());
     }
 
     /**
