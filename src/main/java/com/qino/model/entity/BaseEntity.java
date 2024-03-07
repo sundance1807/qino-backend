@@ -16,14 +16,8 @@ public class BaseEntity implements Serializable {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "created_by")
-    private String createdBy;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "updated_by")
-    private String updatedBy;
 
     @PrePersist
     public void prePersist() {
@@ -32,8 +26,7 @@ public class BaseEntity implements Serializable {
         if (this.createdAt == null) {
             this.createdAt = now;
         }
-        if (this.createdBy == null) {
-            this.createdBy = "SYSTEM";
-        }
+
+        this.updatedAt = now;
     }
 }
