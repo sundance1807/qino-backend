@@ -1,6 +1,6 @@
 package com.qino.config;
 
-import com.qino.util.Generator;
+import com.github.javafaker.Faker;
 import com.qino.util.UsernameValidator;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -17,8 +17,8 @@ public class AppConfig {
     }
 
     @Bean
-    public Generator generator() {
-        return new Generator();
+    public Faker faker() {
+        return new Faker();
     }
 
     @Bean

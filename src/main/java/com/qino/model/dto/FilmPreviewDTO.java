@@ -44,7 +44,7 @@ public class FilmPreviewDTO {
             .stream()
             .map(PersonDTO::new)
             .collect(Collectors.toSet());
-        this.directors = filmEntity.getActors()
+        this.actors = filmEntity.getActors()
             .stream()
             .map(PersonDTO::new)
             .collect(Collectors.toSet());

@@ -1,5 +1,6 @@
 package com.qino.service;
 
+import com.github.javafaker.Faker;
 import com.qino.exception.CustomException;
 import com.qino.model.dto.PersonDTO;
 import com.qino.model.entity.PersonEntity;
@@ -20,6 +21,23 @@ import java.util.stream.Collectors;
 public class PersonService {
     private PersonRepository personRepository;
     private ModelMapper modelMapper;
+    private Faker faker;
+
+
+    /**
+     * @param total how many persons do you need?
+     */
+    public void generate(int total) {
+        for (int i = 0; i < total; i++) {
+            PersonDTO personDTO = new PersonDTO();
+            personDTO.setFirstName(faker.name().firstName());
+            personDTO.setSecondName(faker.name().lastName());
+            personDTO.setDateOfBirth(LocalDate.parse("1990-01-01"));
+            personDTO.setAge(calculateAge(personDTO.getDateOfBirth()));
+
+            personRepository.save(modelMapper.map(personDTO, PersonEntity.class));
+        }
+    }
 
     /**
      * @param personDTO person to save
@@ -90,6 +108,10 @@ public class PersonService {
                 .build());
     }
 
+    /**
+     * @param dateOfBirth person's date of birth
+     * @return age by date of birth
+     */
     private int calculateAge(LocalDate dateOfBirth) {
         if (dateOfBirth != null) {
             return Period.between(dateOfBirth, LocalDate.now()).getYears();

@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -25,10 +27,18 @@ public class PersonController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public PersonDTO findOne(@PathVariable("id") Long id) throws  CustomException {
+    public PersonDTO findOne(@PathVariable("id") Long id) throws CustomException {
         log.info("Incoming request to find person with id: {}", id);
 
         return personService.findOne(id);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.FOUND)
+    public Set<PersonDTO> findAll() {
+        log.info("Incoming request to find all persons");
+
+        return personService.getAllPersons();
     }
 
     @PutMapping("/{id}")
@@ -46,4 +56,9 @@ public class PersonController {
         personService.deleteOne(id);
     }
 
+    @PostMapping("/generate/{total}")
+    @ResponseStatus(HttpStatus.OK)
+    public void generate(@PathVariable("total") int total) {
+        personService.generate(total);
+    }
 }

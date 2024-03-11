@@ -20,38 +20,35 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO saveOne(@RequestBody UserDTO userDTO) throws CustomException {
-        log.info("Incoming request to save user: {}", userDTO.toString());
+        log.info("Incoming request to save user: {}.", userDTO.toString());
         return userService.saveOne(userDTO);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public UserDTO getOne(@PathVariable Long id) throws CustomException {
-        log.info("Incoming request to get user by id: {}", id);
+        log.info("Incoming request to get user by id: {}.", id);
         return userService.findOne(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     public Set<UserDTO> getAll() {
-        log.info("Incoming request to get all users");
+        log.info("Incoming request to get all users.");
         return userService.findAll();
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateOne(@PathVariable Long id, @RequestBody UserDTO userDTO) throws CustomException {
-        log.info("Incoming request to update user: {}", userDTO.toString());
+        log.info("Incoming request to update user: {}.", userDTO.toString());
         return userService.updateOne(id, userDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOne(@PathVariable Long id) throws CustomException {
-        log.info("Incoming request to delete user by id: {}", id);
+        log.info("Incoming request to delete user by id: {}.", id);
         userService.deleteOne(id);
     }
-
-
-
 }
