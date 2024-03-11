@@ -19,10 +19,9 @@ public class FilmDTO extends BaseDTO {
     private Year releaseYear;
     @NonNull
     private String description;
-    private Integer budget;
-    private Integer grosses;
-    @NonNull
-    private Integer duration;
+    private String budget;
+    private String grosses;
+    private String duration;
     private Long votes;
     private Float rating;
     @NonNull

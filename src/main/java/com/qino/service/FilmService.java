@@ -1,6 +1,7 @@
 package com.qino.service;
 
 import com.qino.exception.CustomException;
+import com.qino.model.Currency;
 import com.qino.model.dto.FilmDTO;
 import com.qino.model.dto.FilmPreviewDTO;
 import com.qino.model.entity.FilmEntity;
@@ -40,6 +41,7 @@ public class FilmService {
     public FilmDTO saveOne(FilmDTO filmDTO) throws CustomException {
         FilmEntity filmEntity = modelMapper.map(filmDTO, FilmEntity.class);
         filmEntity.setTitle(filmEntity.getTitle().trim());
+        filmEntity.setDuration(Integer.parseInt(filmDTO.getDuration()));
         filmEntity.setReleaseYear(validateReleaseYear(filmEntity.getReleaseYear()));
         filmEntity.setGenres(validateGenres(filmEntity.getGenres()));
         filmEntity.setDirectors(validatePersons(filmEntity.getDirectors()));
@@ -53,7 +55,6 @@ public class FilmService {
     }
 
     /**
-     *
      * @param id film id
      * @return existing film
      * @throws CustomException if film not found
@@ -62,12 +63,15 @@ public class FilmService {
         FilmEntity filmEntity = findById(id);
         filmEntity.setRating(filmRepository.getRating(id));
         filmEntity.setVotes(filmRepository.getVotes(id));
+        FilmDTO dto = modelMapper.map(filmEntity, FilmDTO.class);
+        dto.setDuration(formatDuration(dto.getDuration()));
+        dto.setBudget(formatAmount(dto.getBudget()));
+        dto.setGrosses(formatAmount(dto.getGrosses()));
 
-        return modelMapper.map(filmEntity, FilmDTO.class);
+        return dto;
     }
 
     /**
-     *
      * @return set of film previews
      */
     public Set<FilmPreviewDTO> getAllFilmPreviews() {
@@ -114,7 +118,6 @@ public class FilmService {
     }
 
     /**
-     *
      * @param id film id
      * @return existing film
      * @throws CustomException if film not found
@@ -127,7 +130,6 @@ public class FilmService {
     }
 
     /**
-     *
      * @param year release year
      * @return year
      * @throws CustomException if year out of bound
@@ -144,7 +146,6 @@ public class FilmService {
     }
 
     /**
-     *
      * @param genreEntitySet set of genres id
      * @return set of existing genres
      * @throws CustomException if genre not found
@@ -164,7 +165,6 @@ public class FilmService {
     }
 
     /**
-     *
      * @param personEntitySet of persons id
      * @return set of existing persons
      * @throws CustomException if persons not found
@@ -183,5 +183,42 @@ public class FilmService {
         return persons;
     }
 
+    /**
+     *
+     * @param amount amount
+     * @return formatted amount
+     */
+    private String formatAmount(String amount) {
+        StringBuilder result = new StringBuilder();
+        int numLength = amount.length();
+        int count = 0;
+
+        if (numLength < 3) {
+            return amount;
+        }
+
+        for (int i = numLength - 1; i >= 0; i--) {
+            result.insert(0, amount.charAt(i));
+            count++;
+            if (count % 3 == 0 && i != 0) {
+                result.insert(0, " ");
+            }
+        }
+
+        return Currency.USD.getSymbol() + result;
+    }
+
+
+    /**
+     *
+     * @param duration duration
+     * @return formatted duration
+     */
+    private String formatDuration(String duration) {
+        int numDuration = Integer.parseInt(duration);
+        String hours = "0" + numDuration / 60;
+        String minutes = String.valueOf(numDuration % 60);
+        return duration + " мин." + "/ " + hours + ":" + minutes;
+    }
 
 }
