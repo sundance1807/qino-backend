@@ -1,5 +1,6 @@
 package com.qino.config;
 
+import com.github.javafaker.Faker;
 import com.qino.util.UsernameValidator;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -13,6 +14,11 @@ public class AppConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
+    }
+
+    @Bean
+    public Faker faker() {
+        return new Faker();
     }
 
     @Bean
