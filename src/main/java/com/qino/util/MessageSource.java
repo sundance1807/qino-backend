@@ -1,8 +1,6 @@
 package com.qino.util;
 
 public enum MessageSource {
-    //System
-
     //Users
     USER_NOT_FOUND("User with id: '%s' not found."),
     USERNAME_IS_ALREADY_TAKEN("Username '%s' is already taken."),
@@ -15,7 +13,6 @@ public enum MessageSource {
     //Films
     FILM_NOT_FOUND("Film with id: '%s' not found."),
     RELEASE_YEAR_OUT_OF_BOUND("Release date out of bound."),
-    FILM_DETAILS_NOT_FOUND("Film details not found."),
 
     //Reviews
     REVIEW_NOT_FOUND("Review with id: '%s' not found."),
@@ -23,7 +20,6 @@ public enum MessageSource {
 
     //Persons
     PERSON_NOT_FOUND("Person with id: '%s' not found."),
-
     ;
     private final String text;
 
