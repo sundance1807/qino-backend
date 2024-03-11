@@ -29,7 +29,7 @@ public class UserService {
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .message(MessageSource.USERNAME_IS_ALREADY_TAKEN.getText(userDTO.getUsername()))
                 .build();
-        };
+        }
 
         if (!userValidator.isValid(userDTO.getUsername())) {
             throw CustomException.builder()
