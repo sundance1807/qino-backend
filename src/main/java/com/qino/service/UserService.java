@@ -1,5 +1,6 @@
 package com.qino.service;
 
+import com.github.javafaker.Faker;
 import com.qino.exception.CustomException;
 import com.qino.model.dto.UserDTO;
 import com.qino.model.entity.UserEntity;
@@ -11,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,8 +20,19 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
     private final UsernameValidator userValidator;
+    private final ModelMapper modelMapper;
+    private final Faker faker;
+
+
+    public void generate(Integer total) throws CustomException {
+        for (int i = 0; i < total; i++) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUsername(faker.name().username());
+            userDTO.setPassword(faker.random().hex(12));
+            saveOne(userDTO);
+        }
+    }
 
     public UserDTO saveOne(UserDTO userDTO) throws CustomException {
         if (Boolean.TRUE.equals(userRepository.existsByUsername(userDTO.getUsername()))) {
@@ -74,16 +85,7 @@ public class UserService {
         userRepository.delete(userEntity);
     }
 
-    public Set<UserDTO> saveAll(Set<UserDTO> userDTOSet) throws CustomException {
-        Set<UserDTO> savedUsers = new HashSet<>();
-        for (UserDTO user : userDTOSet) {
-            UserDTO savedUser = saveOne(user);
-            savedUsers.add(savedUser);
-        }
-        return savedUsers;
-    }
-
-    public UserEntity findById(Long id) throws CustomException {
+    private UserEntity findById(Long id) throws CustomException {
         return userRepository.findById(id).orElseThrow(
             () -> CustomException.builder()
                 .httpStatus(HttpStatus.NOT_FOUND)

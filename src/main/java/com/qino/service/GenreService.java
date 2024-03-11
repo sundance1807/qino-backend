@@ -23,6 +23,7 @@ public class GenreService {
     private GenreRepository genreRepository;
     private ModelMapper modelMapper;
 
+
     /**
      * @param genreDTO genre to save
      * @return saved genre
@@ -36,6 +37,15 @@ public class GenreService {
         GenreEntity genreEntity = genreRepository.save(modelMapper.map(genreDTO, GenreEntity.class));
 
         return modelMapper.map(genreEntity, GenreDTO.class);
+    }
+
+    public void saveAll(Set<String> genres) throws CustomException {
+        for (String genre : genres) {
+            GenreDTO genreDTO = new GenreDTO();
+            genreDTO.setName(genre);
+            saveOne(genreDTO);
+        }
+
     }
 
     /**
