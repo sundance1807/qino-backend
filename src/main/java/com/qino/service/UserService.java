@@ -24,7 +24,7 @@ public class UserService {
     private final UsernameValidator userValidator;
 
     public UserDTO saveOne(UserDTO userDTO) throws CustomException {
-        if (userRepository.existsByUsername(userDTO.getUsername())) {
+        if (Boolean.TRUE.equals(userRepository.existsByUsername(userDTO.getUsername()))) {
             throw CustomException.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .message(MessageSource.USERNAME_IS_ALREADY_TAKEN.getText(userDTO.getUsername()))
@@ -38,8 +38,8 @@ public class UserService {
                 .build();
         }
 
-        userDTO.setUsername(userDTO.getUsername());
-        userDTO.setPassword(userDTO.getPassword());
+        userDTO.setUsername(userDTO.getUsername().trim());
+        userDTO.setPassword(userDTO.getPassword().trim());
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
         userEntity = userRepository.save(userEntity);
 
@@ -50,6 +50,13 @@ public class UserService {
         UserEntity userEntity = findById(id);
 
         return modelMapper.map(userEntity, UserDTO.class);
+    }
+
+    public Set<UserDTO> findAll() {
+        return userRepository.findAll()
+            .stream()
+            .map(UserDTO::new)
+            .collect(Collectors.toSet());
     }
 
     public UserDTO updateOne(Long id, UserDTO userDTO) throws CustomException {
@@ -76,13 +83,6 @@ public class UserService {
         return savedUsers;
     }
 
-    public Set<UserDTO> findAll() {
-        return userRepository.findAll()
-            .stream()
-            .map(UserDTO::new)
-            .collect(Collectors.toSet());
-    }
-
     public UserEntity findById(Long id) throws CustomException {
         return userRepository.findById(id).orElseThrow(
             () -> CustomException.builder()
@@ -90,7 +90,5 @@ public class UserService {
                 .message(MessageSource.USER_NOT_FOUND.getText(String.valueOf(id)))
                 .build());
     }
-
-
 }
 
