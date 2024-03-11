@@ -55,10 +55,4 @@ public class PersonController {
         log.info("Incoming request to delete person with id: {}", id);
         personService.deleteOne(id);
     }
-
-    @PostMapping("/generate/{total}")
-    @ResponseStatus(HttpStatus.OK)
-    public void generate(@PathVariable("total") int total) {
-        personService.generate(total);
-    }
 }

@@ -27,7 +27,7 @@ public class PersonService {
     /**
      * @param total how many persons do you need?
      */
-    public void generate(int total) {
+    public void generate(Integer total) {
         for (int i = 0; i < total; i++) {
             PersonDTO personDTO = new PersonDTO();
             personDTO.setFirstName(faker.name().firstName());
