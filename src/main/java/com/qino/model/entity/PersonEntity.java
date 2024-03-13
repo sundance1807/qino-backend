@@ -1,6 +1,5 @@
 package com.qino.model.entity;
 
-import com.qino.model.dto.PersonDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PersonEntity extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,10 +27,4 @@ public class PersonEntity extends BaseEntity {
     private LocalDate dateOfBirth;
     @Column(name = "age")
     private int age;
-
-    public PersonEntity(PersonDTO personDTO) {
-        this.firstName = personDTO.getFirstName();
-        this.secondName = personDTO.getSecondName();
-        this.dateOfBirth = personDTO.getDateOfBirth();
-    }
 }

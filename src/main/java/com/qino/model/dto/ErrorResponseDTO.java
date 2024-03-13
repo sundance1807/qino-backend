@@ -13,11 +13,9 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorResponseDTO {
+    
     private LocalDateTime dateTime;
-
     private int code;
-
     private String message;
-
     private Map<String, String> invalidFields;
 }

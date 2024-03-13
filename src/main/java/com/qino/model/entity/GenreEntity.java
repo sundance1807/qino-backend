@@ -14,13 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GenreEntity extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-
-    public GenreEntity(GenreDTO genreDTO) {
-        this.name = genreDTO.getName();
-    }
 }

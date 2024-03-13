@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "reviews")
 @EqualsAndHashCode(callSuper = true)
 public class ReviewEntity extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class FilmPreviewDTO {
+
     private Long id;
     @NonNull
     private String title;

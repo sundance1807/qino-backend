@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 public class BaseEntity implements Serializable {
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "created_at")
     private LocalDateTime createdAt;

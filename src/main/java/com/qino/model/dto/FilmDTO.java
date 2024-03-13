@@ -1,7 +1,6 @@
 package com.qino.model.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
@@ -11,8 +10,8 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class FilmDTO extends BaseDTO {
+public class FilmDTO {
+
     private Long id;
     @NonNull
     private String title;
@@ -36,6 +35,4 @@ public class FilmDTO extends BaseDTO {
     private Set<PersonDTO> composers = new HashSet<>();
     @NonNull
     private Set<PersonDTO> actors = new HashSet<>();
-
-
 }

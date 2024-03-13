@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Currency {
+
     USD("$");
 
     private final String symbol;
