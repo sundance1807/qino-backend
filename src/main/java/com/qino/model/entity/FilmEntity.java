@@ -12,6 +12,7 @@ import java.util.Set;
 @Table(name = "films")
 @EqualsAndHashCode(callSuper = true)
 public class FilmEntity extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
