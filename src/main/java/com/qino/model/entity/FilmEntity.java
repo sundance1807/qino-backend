@@ -22,25 +22,30 @@ public class FilmEntity extends BaseEntity {
     @Column(name = "release_year")
     private Year releaseYear;
     @Column(name = "description", nullable = false, length = 1000)
-    private String description;
+    private String description = "";
     @Column(name= "budget")
-    private Integer budget;
+    private Integer budget = 0;
     @Column(name= "box_office")
     private Integer boxOffice = 0;
     @Column(name = "duration", nullable = false)
-    private Integer duration;
+    private Integer duration = 0;
     @Column(name = "votes")
-    private Long votes;
+    private Long votes = 0L;
     @Column(name = "rating")
-    private Float rating;
+    private Float rating = 0F;
+    
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "films_2_genres",
         joinColumns = @JoinColumn(name = "film_id", nullable = false),
         inverseJoinColumns = @JoinColumn(name = "genre_id", nullable = false))
     private Set<GenreEntity> genres = new HashSet<>();
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "production_crew_id")
-    private ProductionCrewEntity productionCrewEntity;
+    
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(name = "films_2_production_members",
+    joinColumns = @JoinColumn(name = "film_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "production_member_id", nullable = false))
+    private Set<ProductionMemberEntity> productionMembers = new HashSet<>();
+    
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "films_2_actors",
         joinColumns = @JoinColumn(name = "film_id", nullable = false),
